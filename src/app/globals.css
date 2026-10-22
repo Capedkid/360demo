@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f4f1eb;
+  --color-paper-2: #ebe6dc;
+  --color-ink: #161513;
+  --color-ink-2: #3b3934;
+  --color-muted: #77726a;
+  --color-line: #d9d3c7;
+  --color-accent: #a4643a;
+  --color-night: #0f0f0e;
+  --color-night-2: #1a1917;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument), ui-serif, Georgia, serif;
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Responsive images: blur placeholder sits behind the real image ─────────── */
+.blur-img {
+  background-size: cover;
+  background-position: center;
+}
+
+/* ── Lightbox (yet-another-react-lightbox) ──────────────────────────────────── */
+.yarl__root {
+  --yarl__color_backdrop: rgba(12, 12, 11, 0.97);
+  --yarl__thumbnails_container_background_color: rgba(12, 12, 11, 0.97);
+  --yarl__thumbnails_thumbnail_border_color: transparent;
+  --yarl__thumbnails_thumbnail_active_border_color: #fff;
+  --yarl__thumbnails_thumbnail_border_radius: 2px;
+  --yarl__slide_title_font_size: 1rem;
+  --yarl__slide_title_font_weight: 400;
+  --yarl__slide_captions_container_background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+  font-family: var(--font-sans);
+}
+
+/* ── Pannellum ──────────────────────────────────────────────────────────────── */
+.tour-viewer .pnlm-container {
+  background: var(--color-night);
+  font-family: var(--font-sans);
+}
+.tour-viewer .pnlm-load-box,
+.tour-viewer .pnlm-controls-container,
+.tour-viewer .pnlm-panorama-info {
+  display: none !important;
+}
+.tour-viewer .pnlm-ui {
+  cursor: grab;
+}
+.tour-viewer .pnlm-grabbing,
+.tour-viewer .pnlm-grabbing .pnlm-ui {
+  cursor: grabbing;
+}
+
+/* Hotspot anchor: Pannellum centres this box on the hotspot position */
+.tour-hotspot {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.tour-hotspot__dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s var(--ease-out-expo), background 0.25s;
+}
+.tour-hotspot__dot::after {
+  content: "";
+  position: absolute;
+  inset: -0.35rem;
+  border-radius: inherit;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  animation: hotspot-pulse 2.4s var(--ease-out-expo) infinite;
+}
+.tour-hotspot:hover .tour-hotspot__dot {
+  transform: scale(1.12);
+  background: #fff;
+}
+.tour-hotspot__label {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 0.35rem 0.7rem;
+  border-radius: 9999px;
+  background: rgba(15, 15, 14, 0.72);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+.tour-hotspot--info .tour-hotspot__dot {
+  width: 2rem;
+  height: 2rem;
+  background: rgba(15, 15, 14, 0.55);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+}
+.tour-hotspot--info .tour-hotspot__dot::after {
+  display: none;
+}
+.tour-hotspot--info .tour-hotspot__label {
+  opacity: 0;
+  transform: translate(-50%, -0.25rem);
+  transition: opacity 0.25s, transform 0.35s var(--ease-out-expo);
+}
+.tour-hotspot--info:hover .tour-hotspot__label,
+.tour-hotspot--info.is-open .tour-hotspot__label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  50.1% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes hotspot-pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Fallback "full screen" for browsers without the Fullscreen API on elements (iPhone Safari) */
+.tour-pseudo-fullscreen {
+  position: fixed !important;
+  inset: 0;
+  z-index: 100;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-height: none !important;
+  border-radius: 0 !important;
+}

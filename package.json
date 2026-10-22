@@ -1,0 +1,33 @@
+{
+  "name": "360demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "media": "node scripts/optimize-media.mjs",
+    "predev": "npm run media",
+    "dev": "next dev",
+    "prebuild": "npm run media",
+    "build": "next build",
+    "start": "npx --yes serve@14 out",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "motion": "^14.6.0",
+    "next": "16.4.2",
+    "pannellum": "^2.5.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "yet-another-react-lightbox": "^3.32.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
